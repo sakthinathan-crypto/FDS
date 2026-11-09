@@ -1,0 +1,34 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* High contrast mode utilities */
+.high-contrast-mode {
+  --tw-border-opacity: 1;
+  filter: contrast(125%);
+}
+
+.high-contrast-mode button, 
+.high-contrast-mode a,
+.high-contrast-mode input {
+  outline-offset: 3px;
+}
+
+/* Focus visible styling for accessibility compliance */
+*:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.dark *:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
