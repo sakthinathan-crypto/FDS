@@ -36,21 +36,34 @@ export const AccessibleLoginForm: React.FC<AccessibleLoginFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  // Modals state
+  // Modals state & trigger refs for WCAG 2.4.3 focus restoration
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
   const [forgotEmailSent, setForgotEmailSent] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
 
-  // WCAG 2.1.2: No Keyboard Trap - Ensure Esc key dismisses open dialogs
+  const forgotTriggerRef = React.useRef<HTMLButtonElement>(null);
+  const signupTriggerRef = React.useRef<HTMLButtonElement>(null);
+
+  const closeForgotPassword = () => {
+    setForgotPasswordModal(false);
+    setForgotEmailSent(false);
+    forgotTriggerRef.current?.focus();
+  };
+
+  const closeSignup = () => {
+    setSignupModal(false);
+    signupTriggerRef.current?.focus();
+  };
+
+  // WCAG 2.1.2: No Keyboard Trap - Ensure Esc key dismisses open dialogs and restores focus
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (forgotPasswordModal) {
-          setForgotPasswordModal(false);
-          setForgotEmailSent(false);
+          closeForgotPassword();
         }
         if (signupModal) {
-          setSignupModal(false);
+          closeSignup();
         }
       }
     };
@@ -263,6 +276,7 @@ export const AccessibleLoginForm: React.FC<AccessibleLoginFormProps> = ({
             </label>
 
             <button
+              ref={forgotTriggerRef}
               type="button"
               onClick={() => setForgotPasswordModal(true)}
               className={`text-xs font-bold underline focus-visible:ring-2 focus-visible:ring-indigo-600 rounded cursor-pointer min-h-[32px] flex items-center ${
@@ -419,6 +433,7 @@ export const AccessibleLoginForm: React.FC<AccessibleLoginFormProps> = ({
             Don't have an active student account?{' '}
           </span>
           <button
+            ref={signupTriggerRef}
             type="button"
             onClick={() => setSignupModal(true)}
             className={`font-bold underline cursor-pointer min-h-[32px] inline-flex items-center ${
@@ -442,10 +457,7 @@ export const AccessibleLoginForm: React.FC<AccessibleLoginFormProps> = ({
             <div className="flex items-center justify-between">
               <h3 id="forgot-password-title" className="font-bold text-base">Reset Account Password</h3>
               <button 
-                onClick={() => {
-                  setForgotPasswordModal(false);
-                  setForgotEmailSent(false);
-                }} 
+                onClick={closeForgotPassword} 
                 className="w-11 h-11 flex items-center justify-center rounded-xl text-slate-500 hover:text-slate-800 dark:hover:text-white focus-visible:ring-2 focus-visible:ring-indigo-600 cursor-pointer"
                 aria-label="Close dialog (Escape)"
               >
@@ -479,10 +491,7 @@ export const AccessibleLoginForm: React.FC<AccessibleLoginFormProps> = ({
                   Check your inbox at <strong>{email}</strong> for instructions.
                 </p>
                 <button
-                  onClick={() => {
-                    setForgotPasswordModal(false);
-                    setForgotEmailSent(false);
-                  }}
+                  onClick={closeForgotPassword}
                   className="w-full min-h-[44px] py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold cursor-pointer"
                 >
                   Return to Login
@@ -505,7 +514,7 @@ export const AccessibleLoginForm: React.FC<AccessibleLoginFormProps> = ({
             <div className="flex items-center justify-between">
               <h3 id="signup-dialog-title" className="font-bold text-base">Student Account Registration</h3>
               <button 
-                onClick={() => setSignupModal(false)} 
+                onClick={closeSignup} 
                 className="w-11 h-11 flex items-center justify-center rounded-xl text-slate-500 hover:text-slate-800 dark:hover:text-white focus-visible:ring-2 focus-visible:ring-indigo-600 cursor-pointer"
                 aria-label="Close dialog (Escape)"
               >
@@ -516,7 +525,7 @@ export const AccessibleLoginForm: React.FC<AccessibleLoginFormProps> = ({
               Registration for Course Outcome 5 (Web Technology 2302CS503) is managed via college active directory credentials. Please use your standard roll number login.
             </p>
             <button
-              onClick={() => setSignupModal(false)}
+              onClick={closeSignup}
               className="w-full min-h-[44px] py-3 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-xs cursor-pointer"
             >
               Back to Login Screen

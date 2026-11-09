@@ -21,19 +21,28 @@ const DEFAULT_SETTINGS: AccessibilitySettings = {
   largeFocusRing: true,
 };
 
+const getInitialSettings = (): AccessibilitySettings => {
+  try {
+    const saved = localStorage.getItem('designlab_a11y_settings');
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  
+  const prefersReducedMotion = typeof window !== 'undefined' && 
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  return {
+    ...DEFAULT_SETTINGS,
+    reducedMotion: prefersReducedMotion,
+  };
+};
+
 export const InclusiveLoginProject: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'preview' | 'casestudy'>('preview');
   const [loginMode, setLoginMode] = useState<LoginMode>('standard');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  // Persistent accessibility settings in localStorage
-  const [settings, setSettings] = useState<AccessibilitySettings>(() => {
-    try {
-      const saved = localStorage.getItem('designlab_a11y_settings');
-      if (saved) return JSON.parse(saved);
-    } catch (e) {}
-    return DEFAULT_SETTINGS;
-  });
+  // Persistent accessibility settings in localStorage with prefers-reduced-motion fallback
+  const [settings, setSettings] = useState<AccessibilitySettings>(getInitialSettings);
 
   useEffect(() => {
     try {
@@ -134,7 +143,7 @@ export const InclusiveLoginProject: React.FC = () => {
                 >
                   <div className="text-xs">
                     <div>1. Standard Login Mode</div>
-                    <div className="text-[10px] text-slate-500 font-normal">Evaluated against WCAG 2.2 AA (8.3:1 Contrast)</div>
+                    <div className="text-[10px] text-slate-500 font-normal">Evaluated against WCAG 2.2 AA (17.56:1 text / 6.34:1 button)</div>
                   </div>
                   {loginMode === 'standard' && !settings.highContrast && (
                     <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
@@ -154,7 +163,7 @@ export const InclusiveLoginProject: React.FC = () => {
                 >
                   <div className="text-xs">
                     <div>2. High-Contrast Accessible Mode</div>
-                    <div className="text-[10px] text-slate-400 font-normal">Evaluated for Low Vision (14.2:1 OLED Contrast)</div>
+                    <div className="text-[10px] text-slate-400 font-normal">Evaluated for Low Vision (15.87:1 OLED Contrast)</div>
                   </div>
                   {(loginMode === 'high-contrast' || settings.highContrast) && (
                     <CheckCircle2 className="w-4 h-4 text-amber-400" />

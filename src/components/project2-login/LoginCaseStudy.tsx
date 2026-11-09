@@ -16,7 +16,7 @@ export const LoginCaseStudy: React.FC = () => {
       <div className="space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-semibold border border-indigo-200/60 dark:border-indigo-900/40">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-          <span>Evaluated Against WCAG 2.2 Level AA/AAA Criteria · 8/8 Criteria Verified</span>
+          <span>Evaluated Against WCAG 2.2 Level AA/AAA Criteria · 11 Evaluated Criteria Verified</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Inclusive & Accessible Authentication Architecture
@@ -64,7 +64,7 @@ export const LoginCaseStudy: React.FC = () => {
                     Luminance contrast of input values, labels, helper hints, and button text against backgrounds in both Standard and High Contrast modes.
                   </td>
                   <td className="py-3 px-3 font-mono text-[11px]">
-                    Labels: 18.7:1 (AAA). Primary button: 5.9:1 (AA). High Contrast amber: 14.2:1 (AAA).
+                    Labels: 17.56:1 (AAA). Primary button: 6.34:1 (AA). High Contrast amber: 15.87:1 (AAA).
                   </td>
                   <td className="py-3 px-2 text-center">
                     <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 font-bold font-mono text-[10px]">PASS</span>
@@ -81,7 +81,7 @@ export const LoginCaseStudy: React.FC = () => {
                   </td>
                   <td className="py-3 px-2 text-center font-mono font-bold text-indigo-600 dark:text-indigo-400">AA</td>
                   <td className="py-3 px-3">
-                    Text resizing up to 200% (16px base $\rightarrow$ 32px max) without assistive tech, verifying no horizontal scrolling or clipped labels.
+                    Text resizing up to 200% (16px base &rarr; 32px max) without assistive tech, verifying no horizontal scrolling or clipped labels.
                   </td>
                   <td className="py-3 px-3 font-mono text-[11px]">
                     Input fields expand vertically; line-height 1.4 maintains spacing; no text clipping or horizontal scrolling.
@@ -104,7 +104,7 @@ export const LoginCaseStudy: React.FC = () => {
                     Visual boundaries of text inputs, checkbox borders, and interactive state indicators against adjacent background surfaces.
                   </td>
                   <td className="py-3 px-3 font-mono text-[11px]">
-                    Inputs use 2px slate-500/400 (4.6:1 light / 6.2:1 dark); High Contrast uses amber-400 (11.4:1). All $\ge 3:1$.
+                    Inputs use 2px slate-500/400 (4.76:1 light / 6.85:1 dark); High Contrast uses amber-400 (12.53:1). All &ge; 3:1.
                   </td>
                   <td className="py-3 px-2 text-center">
                     <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 font-bold font-mono text-[10px]">PASS</span>
@@ -295,9 +295,9 @@ export const LoginCaseStudy: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 space-y-1.5">
-              <span className="font-bold text-slate-900 dark:text-white">4.5:1 Body & 14:1 AAA Contrast</span>
+              <span className="font-bold text-slate-900 dark:text-white">4.5:1 Body & 15.87:1 AAA Contrast</span>
               <p className="text-xs text-slate-500">
-                All primary labels exceed the 4.5:1 WCAG AA threshold. In High Contrast Mode, contrast jumps to 14:1+ using OLED black and high-luminescence amber (#FDE047).
+                All primary labels exceed the 4.5:1 WCAG AA threshold (standard text: 17.56:1, primary button: 6.34:1). In High Contrast Mode, contrast reaches 15.87:1 using OLED black and high-luminescence amber (#FDE047).
               </p>
             </div>
 
